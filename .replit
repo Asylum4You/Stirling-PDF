@@ -2,3 +2,15 @@ modules = ["java-graalvm22.3", "web", "nodejs-20", "angular-node-24"]
 
 [nix]
 channel = "stable-25_05"
+packages = ["docker_27", "python313Packages.docker", "sudo", "nix", "nixVersions.git", "nixpkgs-pytools"]
+
+[workflows]
+
+[[workflows.workflow]]
+name = "docker"
+mode = "sequential"
+author = 41016446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = 'docker run -d \   --name stirling-pdf \   -p 8080:8080 \   -v "./StirlingPDF/trainingData:/usr/share/tessdata" \   -v "./StirlingPDF/extraConfigs:/configs" \   -v "./StirlingPDF/customFiles:/customFiles/" \   -v "./StirlingPDF/logs:/logs/" \   -v "./StirlingPDF/pipeline:/pipeline/" \   -e DISABLE_ADDITIONAL_FEATURES=true \   -e LANGS=en_GB \   docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest'
