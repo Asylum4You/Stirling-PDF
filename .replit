@@ -1,5 +1,4 @@
-modules = ["angular-node-24", "java-graalvm22.3", "nodejs-20", "python-3.11", "web", "python-base-3.13", "python-base-3.12"]
+modules = ["java-graalvm22.3", "web", "nodejs-20", "angular-node-24"]
 
 [nix]
 channel = "stable-25_05"
-packages = ["python313Packages.py-bip39-bindings", "wget"]
