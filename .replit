@@ -1,9 +1,9 @@
-modules = ["java-graalvm22.3", "web", "nodejs-20", "angular-node-24"]
+modules = ["java-graalvm22.3", "web", "nodejs-20", "angular-node-24", "python-3.11"]
 run = "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"
 
 [nix]
 channel = "stable-25_05"
-packages = ["wget", "runtimeShellPackage", "vim-full", "postgresql"]
+packages = ["fontconfig", "ghostscript", "glib", "harfbuzz", "jbig2enc", "libGL", "libGLU", "libreoffice", "pango", "pngquant", "poppler-utils", "postgresql", "qpdf", "runtimeShellPackage", "tesseract", "unpaper", "vim-full", "wget"]
 
 [[ports]]
 localPort = 8080
