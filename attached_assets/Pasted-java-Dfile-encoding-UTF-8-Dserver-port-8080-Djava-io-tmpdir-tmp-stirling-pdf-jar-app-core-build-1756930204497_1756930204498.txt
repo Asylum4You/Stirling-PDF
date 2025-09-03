@@ -1,0 +1,91 @@
+java -Dfile.encoding=UTF-8 -Dserver.port=8080 -Djava.io.tmpdir=/tmp/stirling-pdf -jar app/core/build/libs/Stirling-PDF-1.2.0.jar
+java -Dfile.encoding=UTF-8 -Dserver.port=8080 -Djava.io.tmpdir=/tmp/stirling-pdf -jar build/libs/Stirling-PDF-*.jar
+Production
+Status
+JAMES deployed about 19 hours ago
+Visibility
+Public
+Domain
+https://stirling-pdf-asylumserve.replit.app
+https://pdf.asylum-serve.com
+https://pdf.lasvegasdatahub.com
+Type
+Autoscale
+(4 vCPU / 8 GiB RAM / 3 Max)
+See all usage
+5d115a34
+JG
+
+asylumserve
+JAMES
+failed to deploy about 19 hours ago
+e08d8aa6
+JG
+
+asylumserve
+JAMES
+deployed 4 days ago
+30m
+ • 
+31 minutes ago
+1 port opened on
+1 port did not open
+Reduce application size by removing unneeded dependencies and files
+remove large dependencies and unused files to reduce image size below 8 Gig limit
+Large Spring Boot application with all dependencies and resources
+Optimized application with reduced dependencies, .dockerignore file to exclude unnecessary files, and multi-stage build if using Docker
+create proper .replit configuration Missing or incorrect .replit file causing Python environment detection
+run = "./gradlew bootRun"
+
+[nix]
+channel = "stable-22_11"
+
+[nix.channel]
+
+[[ports]]
+localPort = 8080
+externalPort = 80 add .dockerignore file
+No .dockerignore file allowing all files to be included in deployment
+
+Gradle
+.gradle/
+build/
+*.jar
+*.war
+
+IDE
+.idea/
+*.iml
+*.iws
+
+OS
+.DS_Store
+Thumbs.db
+
+Logs
+*.log
+logs/
+
+Testing
+testing/
+exampleYmlFiles/
+
+Documentation
+docs/
+images/
+README.md update port configuration to user single port for cloud run deployment
+Multiple ports configured: 8080 -> 8080, 35729 -> 80
+Single port configuration: 8080 -> 80 for web traffic
+
+34 minutes ago
+
+19 messages & 28 actions
+Now let me examine the main build file and the project structure to understand the dependencies:
+Checkpoint made
+29 minutes ago
+Reduce application size by removing unneeded dependencies and files
+5 minutes of work
+
+Scroll to latest
+This chat has ended
+Enable "Accessible Terminal" in Workspace Settings to use a screen reader with the shell.
