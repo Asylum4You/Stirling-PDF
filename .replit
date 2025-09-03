@@ -11,7 +11,7 @@ externalPort = 8080
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["java", "-Dfile.encoding=UTF-8", "-Dserver.port=8080", "-Djava.io.tmpdir=/tmp/stirling-pdf", "-jar", "app/core/build/libs/stirling-pdf-1.2.0.jar"]
+run = ["sh", "-c", "mkdir -p /tmp/stirling-pdf && java -Dfile.encoding=UTF-8 -Dserver.port=8080 -Djava.io.tmpdir=/tmp/stirling-pdf -jar app/core/build/libs/stirling-pdf-1.2.0.jar"]
 build = ["./gradlew", "clean", "build", "-x", "test"]
 
 [agent]
