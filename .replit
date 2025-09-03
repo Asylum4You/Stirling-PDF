@@ -3,7 +3,7 @@ run = "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"
 
 [nix]
 channel = "stable-25_05"
-packages = ["wget", "runtimeShellPackage", "vim-full"]
+packages = ["wget", "runtimeShellPackage", "vim-full", "postgresql"]
 
 [[ports]]
 localPort = 8080
