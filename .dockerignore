@@ -1,0 +1,48 @@
+# Build directories
+build/
+target/
+.gradle/
+node_modules/
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Large development files
+opt/
+images/
+testing/
+devGuide/
+devTools/
+docs/
+
+# Git and version control
+.git/
+.gitignore
+
+# Package manager files
+package-lock.json
+*.pyc
+__pycache__/
+
+# Large dependencies that aren't needed in runtime
+gradle/
+gradlew
+gradlew.bat
+
+# Development configs
+.replit
+replit.nix
+pyproject.toml
+
+# Large static assets not needed for runtime
+customFiles/
+exampleYmlFiles/

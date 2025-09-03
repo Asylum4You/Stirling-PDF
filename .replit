@@ -1,4 +1,4 @@
-modules = ["java-graalvm22.3", "web", "nodejs-20", "angular-node-24", "python-3.11"]
+modules = ["java-graalvm22.3", "web"]
 run = "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"
 
 [nix]
@@ -15,7 +15,8 @@ externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["./gradlew", "bootRun"]
+run = ["java", "-Dserver.port=5000", "-jar", "app/core/build/libs/Stirling-PDF-1.2.0.jar"]
+build = ["./gradlew", "build"]
 
 [agent]
 expertMode = true

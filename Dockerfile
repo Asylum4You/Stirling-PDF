@@ -64,9 +64,9 @@ RUN echo "@main https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /etc/a
     # OCR MY PDF (unpaper for descew and other advanced features)
     tesseract-ocr-data-eng \
     tesseract-ocr-data-chi_sim \
-	tesseract-ocr-data-deu \
-	tesseract-ocr-data-fra \
-	tesseract-ocr-data-por \
+        tesseract-ocr-data-deu \
+        tesseract-ocr-data-fra \
+        tesseract-ocr-data-por \
     unpaper \
     # CV
     py3-opencv \
@@ -94,8 +94,8 @@ RUN echo "@main https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /etc/a
     chown -R stirlingpdfuser:stirlingpdfgroup $HOME /scripts /usr/share/fonts/opentype/noto /configs /customFiles /pipeline /tmp/stirling-pdf && \
     chown stirlingpdfuser:stirlingpdfgroup /app.jar
 
-EXPOSE 8080/tcp
+EXPOSE 5000/tcp
 
 # Set user and run command
 ENTRYPOINT ["tini", "--", "/scripts/init.sh"]
-CMD ["sh", "-c", "java -Dfile.encoding=UTF-8 -Djava.io.tmpdir=/tmp/stirling-pdf -jar /app.jar & /opt/venv/bin/unoserver --port 2003 --interface 127.0.0.1"]
+CMD ["sh", "-c", "java -Dfile.encoding=UTF-8 -Dserver.port=5000 -Djava.io.tmpdir=/tmp/stirling-pdf -jar /app.jar & /opt/venv/bin/unoserver --port 2003 --interface 127.0.0.1"]
