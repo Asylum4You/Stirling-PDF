@@ -9,14 +9,10 @@ packages = ["fontconfig", "ghostscript", "glib", "harfbuzz", "jbig2enc", "libGL"
 localPort = 8080
 externalPort = 8080
 
-[[ports]]
-localPort = 35729
-externalPort = 80
-
 [deployment]
 deploymentTarget = "autoscale"
-run = ["java", "-Dserver.port=5000", "-jar", "app/core/build/libs/Stirling-PDF-1.2.0.jar"]
-build = ["./gradlew", "build"]
+run = ["java", "-Dfile.encoding=UTF-8", "-Dserver.port=8080", "-Djava.io.tmpdir=/tmp/stirling-pdf", "-jar", "app/core/build/libs/Stirling-PDF-1.2.0.jar"]
+build = ["./gradlew", "clean", "build", "-x", "test"]
 
 [agent]
 expertMode = true

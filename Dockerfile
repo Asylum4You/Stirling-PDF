@@ -94,8 +94,8 @@ RUN echo "@main https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /etc/a
     chown -R stirlingpdfuser:stirlingpdfgroup $HOME /scripts /usr/share/fonts/opentype/noto /configs /customFiles /pipeline /tmp/stirling-pdf && \
     chown stirlingpdfuser:stirlingpdfgroup /app.jar
 
-EXPOSE 5000/tcp
+EXPOSE 8080/tcp
 
 # Set user and run command
 ENTRYPOINT ["tini", "--", "/scripts/init.sh"]
-CMD ["sh", "-c", "java -Dfile.encoding=UTF-8 -Dserver.port=5000 -Djava.io.tmpdir=/tmp/stirling-pdf -jar /app.jar & /opt/venv/bin/unoserver --port 2003 --interface 127.0.0.1"]
+CMD ["sh", "-c", "java -Dfile.encoding=UTF-8 -Dserver.port=8080 -Djava.io.tmpdir=/tmp/stirling-pdf -jar /app.jar & /opt/venv/bin/unoserver --port 2003 --interface 127.0.0.1"]

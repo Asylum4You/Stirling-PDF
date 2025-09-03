@@ -46,3 +46,41 @@ pyproject.toml
 # Large static assets not needed for runtime
 customFiles/
 exampleYmlFiles/
+
+# Additional large files and directories
+*.jar
+*.war
+*.ear
+workspace/
+pipeline/
+app/*/build/libs/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Documentation files
+*.md
+CONTRIBUTING.md
+SECURITY.md
+DATABASE.md
+HowToUseOCR.md
+LICENSE
+
+# Docker files (not needed inside container)
+Dockerfile*
+docker-compose*.yml
+
+# Launch4J and packaging
+launch4jConfig.xml
+
+# Environment files
+.env
+.env.local
+.env.*.local
