@@ -1,4 +1,4 @@
-modules = ["java-graalvm22.3", "web"]
+modules = ["java-graalvm22.3", "web", "postgresql-16"]
 run = "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"
 
 [nix]
