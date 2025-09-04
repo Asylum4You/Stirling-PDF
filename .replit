@@ -11,8 +11,8 @@ externalPort = 8080
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["sh", "-c", "mkdir -p /tmp/stirling-pdf && java -Dfile.encoding=UTF-8 -Dserver.port=8080 -Djava.io.tmpdir=/tmp/stirling-pdf -jar app/core/build/libs/stirling-pdf-1.2.0.jar"]
-build = ["./gradlew", "clean", "build", "-x", "test"]
+run = ["java", "-Dfile.encoding=UTF-8", "-Dserver.port=8080", "-Dserver.address=0.0.0.0", "-Djava.io.tmpdir=/tmp", "-XX:+UnlockExperimentalVMOptions", "-XX:MaxRAMPercentage=75", "-XX:InitiatingHeapOccupancyPercent=20", "-XX:+G1PeriodicGCInvokesConcurrent", "-XX:G1PeriodicGCInterval=5000", "-XX:+UseStringDeduplication", "-XX:G1PeriodicGCSystemLoadThreshold=70", "-XX:+UseG1GC", "-Xms256m", "-jar", "app/core/build/libs/stirling-pdf-1.2.0.jar"]
+build = ["./gradlew", "clean", "build", "-x", "test", "--parallel"]
 
 [agent]
 expertMode = true
