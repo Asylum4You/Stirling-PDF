@@ -110,7 +110,7 @@ public class ApplicationProperties {
 
     @Data
     public static class Security {
-        private Boolean enableLogin;
+        private Boolean enableLogin = true;
         private Boolean csrfDisabled;
         private InitialLogin initialLogin = new InitialLogin();
         private OAUTH2 oauth2 = new OAUTH2();
