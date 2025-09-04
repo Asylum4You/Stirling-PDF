@@ -187,7 +187,7 @@ public class UserController {
     @PreAuthorize("!hasAuthority('ROLE_DEMO_USER')")
     @PostMapping("/updateUserSettings")
     /**
-     * Updates the user settings based on the provided JSON payload.
+     * Updates the user settings based on the provided form data.
      *
      * @param updates A map containing the settings to update. The expected structure is:
      *     <ul>
@@ -204,7 +204,7 @@ public class UserController {
      * @throws UnsupportedProviderException If the operation is not supported for the user's
      *     provider.
      */
-    public String updateUserSettings(@RequestBody Map<String, String> updates, Principal principal)
+    public String updateUserSettings(@RequestParam Map<String, String> updates, Principal principal)
             throws SQLException, UnsupportedProviderException {
         log.debug("Processed updates: {}", updates);
         // Assuming you have a method in userService to update the settings for a user
