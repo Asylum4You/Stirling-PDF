@@ -55,8 +55,8 @@ public class RuntimePathConfig {
         boolean isDocker = isRunningInDocker();
 
         // Initialize Operation paths
-        String defaultWeasyPrintPath = "/home/runner/workspace/.pythonlibs/bin/weasyprint";
-        String defaultUnoConvertPath = "/home/runner/workspace/.pythonlibs/bin/unoconvert";
+        String defaultWeasyPrintPath = isDocker ? "/opt/venv/bin/weasyprint" : "weasyprint";
+        String defaultUnoConvertPath = isDocker ? "/opt/venv/bin/unoconvert" : "unoconvert";
 
         Operations operations = properties.getSystem().getCustomPaths().getOperations();
         this.weasyPrintPath =

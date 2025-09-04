@@ -34,7 +34,6 @@ import stirling.software.common.model.oauth2.GitHubProvider;
 import stirling.software.common.model.oauth2.GoogleProvider;
 import stirling.software.common.model.oauth2.KeycloakProvider;
 import stirling.software.common.model.oauth2.Provider;
-import stirling.software.common.model.oauth2.ReplitProvider;
 import stirling.software.proprietary.security.model.Authority;
 import stirling.software.proprietary.security.model.User;
 import stirling.software.proprietary.security.model.exception.NoProviderFoundException;
@@ -64,7 +63,6 @@ public class OAuth2Configuration {
         oidcClientRegistration().ifPresent(registrations::add);
         googleClientRegistration().ifPresent(registrations::add);
         keycloakClientRegistration().ifPresent(registrations::add);
-        replitClientRegistration().ifPresent(registrations::add);
 
         if (registrations.isEmpty()) {
             log.error("No OAuth2 provider registered");
@@ -204,39 +202,6 @@ public class OAuth2Configuration {
                                 .userNameAttributeName(oidcProvider.getUseAsUsername().getName())
                                 .clientName(clientName)
                                 .redirectUri(REDIRECT_URI_PATH + "oidc")
-                                .authorizationGrantType(AUTHORIZATION_CODE)
-                                .build())
-                : Optional.empty();
-    }
-
-    private Optional<ClientRegistration> replitClientRegistration() {
-        OAUTH2 oAuth2 = applicationProperties.getSecurity().getOauth2();
-
-        if (isOAuth2Enabled(oAuth2) || isClientInitialised(oAuth2)) {
-            return Optional.empty();
-        }
-
-        Client client = oAuth2.getClient();
-        ReplitProvider replitClient = client.getReplit();
-        Provider replit =
-                new ReplitProvider(
-                        replitClient.getClientId(),
-                        replitClient.getClientSecret(),
-                        replitClient.getScopes(),
-                        replitClient.getUseAsUsername());
-
-        return validateProvider(replit)
-                ? Optional.of(
-                        ClientRegistration.withRegistrationId(replit.getName())
-                                .clientId(replit.getClientId())
-                                .clientSecret(replit.getClientSecret())
-                                .scope(replit.getScopes())
-                                .authorizationUri(replit.getAuthorizationUri())
-                                .tokenUri(replit.getTokenUri())
-                                .userInfoUri(replit.getUserInfoUri())
-                                .userNameAttributeName(replit.getUseAsUsername().getName())
-                                .clientName(replit.getClientName())
-                                .redirectUri(REDIRECT_URI_PATH + replit.getName())
                                 .authorizationGrantType(AUTHORIZATION_CODE)
                                 .build())
                 : Optional.empty();

@@ -2,13 +2,6 @@
 
 Stirling-PDF is a robust, locally hosted web-based PDF manipulation tool that provides 50+ PDF operations through a user-friendly interface. The application enables users to perform various PDF operations including merging, splitting, rotating, converting, OCR processing, security operations, and advanced editing features. All file processing occurs locally with files existing only on the client side or temporarily in server memory during task execution, ensuring privacy and security.
 
-## Recent Optimizations (January 2025)
-- **Image Size Reduction**: Removed large optional dependencies (Desktop UI components, development tools) to reduce Docker image size below 8GB limit
-- **Deployment Optimization**: Configured single port (8080) for cloud deployment, removed dual port configuration
-- **Build Improvements**: Enhanced .dockerignore to exclude unnecessary files, disabled non-essential image format support
-- **File Cleanup**: Removed testing directories, documentation images, and build artifacts to minimize deployment size
-- **Cloud Run Compatibility**: Updated temporary directory configuration from `/tmp/stirling-pdf` to `/tmp` to avoid read-only filesystem issues in Cloud Run, ensured server binds to 0.0.0.0 for network accessibility
-
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

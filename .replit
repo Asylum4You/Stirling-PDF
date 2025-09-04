@@ -1,18 +1,17 @@
-modules = ["java-graalvm22.3", "web", "postgresql-16"]
+modules = ["java-graalvm22.3", "web", "nodejs-20", "angular-node-24"]
 run = "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"
 
 [nix]
 channel = "stable-25_05"
-packages = ["fontconfig", "ghostscript", "glib", "harfbuzz", "jbig2enc", "libGL", "libGLU", "libreoffice", "pango", "pngquant", "poppler-utils", "postgresql", "qpdf", "runtimeShellPackage", "tesseract", "unpaper", "vim-full", "wget"]
+packages = ["wget", "runtimeShellPackage", "vim-full", "postgresql"]
 
 [[ports]]
 localPort = 8080
 externalPort = 8080
 
 [deployment]
-deploymentTarget = "autoscale"
-run = ["java", "-Dfile.encoding=UTF-8", "-Dserver.port=8080", "-Dserver.address=0.0.0.0", "-Djava.io.tmpdir=/tmp", "-XX:+UnlockExperimentalVMOptions", "-XX:MaxRAMPercentage=75", "-XX:InitiatingHeapOccupancyPercent=20", "-XX:+G1PeriodicGCInvokesConcurrent", "-XX:G1PeriodicGCInterval=5000", "-XX:+UseStringDeduplication", "-XX:G1PeriodicGCSystemLoadThreshold=70", "-XX:+UseG1GC", "-Xms256m", "-jar", "app/core/build/libs/stirling-pdf-1.2.0.jar"]
-build = ["./gradlew", "clean", "build", "-x", "test", "--parallel"]
+deploymentTarget = "cloudrun"
+run = ["sh", "-c", "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"]
 
 [agent]
 expertMode = true

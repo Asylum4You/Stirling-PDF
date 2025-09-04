@@ -70,14 +70,7 @@ public class AppConfig {
 
     @Bean(name = "loginEnabled")
     public boolean loginEnabled() {
-        Boolean enableLogin = applicationProperties.getSecurity().getEnableLogin();
-        log.info("DEBUG: enableLogin value from ApplicationProperties: " + enableLogin);
-        log.info(
-                "DEBUG: applicationProperties.getSecurity() object: "
-                        + applicationProperties.getSecurity());
-        // Force enable login for production deployment
-        log.info("FORCING LOGIN TO BE ENABLED FOR PRODUCTION");
-        return true; // Force to true to fix production deployment
+        return applicationProperties.getSecurity().getEnableLogin();
     }
 
     @Bean(name = "appName")
