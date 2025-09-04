@@ -41,6 +41,7 @@ import stirling.software.common.model.oauth2.GitHubProvider;
 import stirling.software.common.model.oauth2.GoogleProvider;
 import stirling.software.common.model.oauth2.KeycloakProvider;
 import stirling.software.common.model.oauth2.Provider;
+import stirling.software.common.model.oauth2.ReplitProvider;
 import stirling.software.common.util.ValidationUtils;
 
 @Data
@@ -283,12 +284,14 @@ public class ApplicationProperties {
                 private GoogleProvider google = new GoogleProvider();
                 private GitHubProvider github = new GitHubProvider();
                 private KeycloakProvider keycloak = new KeycloakProvider();
+                private ReplitProvider replit = new ReplitProvider();
 
                 public Provider get(String registrationId) throws UnsupportedProviderException {
                     return switch (registrationId.toLowerCase()) {
                         case "google" -> getGoogle();
                         case "github" -> getGithub();
                         case "keycloak" -> getKeycloak();
+                        case "replit" -> getReplit();
                         default ->
                                 throw new UnsupportedProviderException(
                                         "Logout from the provider "
