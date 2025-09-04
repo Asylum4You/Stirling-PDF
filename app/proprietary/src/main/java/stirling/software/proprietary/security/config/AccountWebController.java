@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -200,6 +202,18 @@ public class AccountWebController {
         }
 
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String processLogin(
+            @RequestParam String username,
+            @RequestParam String password,
+            HttpServletRequest request) {
+        // This method is intentionally empty as Spring Security handles the actual authentication
+        // through its form login configuration. This POST mapping is needed to prevent the
+        // "Method POST not supported" error when the login form is submitted.
+        // The actual authentication is handled by Spring Security's authentication filters.
+        return "redirect:/";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
