@@ -7,19 +7,11 @@ packages = ["wget", "runtimeShellPackage", "vim-full", "postgresql"]
 
 [[ports]]
 localPort = 5000
-externalPort = 5000
-
-[[ports]]
-localPort = 8080
-externalPort = 8080
-
-[[ports]]
-localPort = 35729
 externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["java", "-Dserver.port=${PORT:-5000}", "-Dserver.address=0.0.0.0", "-jar", "app/core/build/libs/stirling-pdf-*.jar"]
+run = ["java", "-Dserver.port=${PORT:-5000}", "-Dserver.address=0.0.0.0", "-jar", "app/core/build/libs/stirling-pdf-1.2.0.jar"]
 build = ["./gradlew", "clean", "build", "-x", "test"]
 
 [agent]
@@ -41,10 +33,10 @@ args = "Spring Boot Server"
 name = "Spring Boot Server"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "webview"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "./gradlew bootRun"
-waitForPort = 8080
-
-[workflows.workflow.metadata]
-outputType = "console"
+waitForPort = 5000
