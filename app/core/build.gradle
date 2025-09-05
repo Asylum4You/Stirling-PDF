@@ -131,6 +131,7 @@ jar {
 // Configure and enable bootJar for this project
 bootJar {
     enabled = true
+    archiveFileName = 'stirling-pdf.jar'
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     zip64 = true
 

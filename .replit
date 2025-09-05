@@ -14,8 +14,9 @@ localPort = 35729
 externalPort = 80
 
 [deployment]
-deploymentTarget = "cloudrun"
-run = ["sh", "-c", "java -jar ./opt/Stirling-PDF/Stirling-PDF.jar"]
+deploymentTarget = "vm"
+run = ["java", "-jar", "./app/core/build/libs/stirling-pdf.jar"]
+build = ["./gradlew", ":stirling-pdf:bootJar", "-x", "test", "--no-daemon"]
 
 [agent]
 expertMode = true
