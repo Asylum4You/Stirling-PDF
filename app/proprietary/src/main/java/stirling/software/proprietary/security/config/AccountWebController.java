@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +46,9 @@ import stirling.software.proprietary.security.model.SessionEntity;
 import stirling.software.proprietary.security.model.User;
 import stirling.software.proprietary.security.repository.TeamRepository;
 import stirling.software.proprietary.security.saml2.CustomSaml2AuthenticatedPrincipal;
+import stirling.software.proprietary.security.service.LoginAttemptService;
 import stirling.software.proprietary.security.service.TeamService;
+import stirling.software.proprietary.security.service.UserService;
 import stirling.software.proprietary.security.session.SessionPersistentRegistry;
 
 @Controller
@@ -59,16 +63,22 @@ public class AccountWebController {
     // Assuming you have a repository for user operations
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
+    private final UserService userService;
+    private final LoginAttemptService loginAttemptService;
 
     public AccountWebController(
             ApplicationProperties applicationProperties,
             SessionPersistentRegistry sessionPersistentRegistry,
             UserRepository userRepository,
-            TeamRepository teamRepository) {
+            TeamRepository teamRepository,
+            UserService userService,
+            LoginAttemptService loginAttemptService) {
         this.applicationProperties = applicationProperties;
         this.sessionPersistentRegistry = sessionPersistentRegistry;
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
+        this.userService = userService;
+        this.loginAttemptService = loginAttemptService;
     }
 
     @GetMapping("/login")
@@ -475,5 +485,62 @@ public class AccountWebController {
             return "redirect:/";
         }
         return "change-creds";
+    }
+
+    @PostMapping("/login")
+    public String processLogin(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam(value = "remember-me", required = false) String rememberMe,
+            HttpServletRequest request,
+            Model model) {
+
+        log.debug("Processing login form submission for user: {}", username);
+
+        // Pre-validation checks before delegating to Spring Security
+        if (loginAttemptService.isBlocked(username)) {
+            log.warn("Login attempt blocked for user: {}", username);
+            model.addAttribute("error", "login.locked");
+            addLoginModelAttributes(model);
+            return "login";
+        }
+
+        if (!userService.usernameExistsIgnoreCase(username)) {
+            log.warn("Login attempt for non-existent user: {}", username);
+            model.addAttribute("error", "login.invalid");
+            addLoginModelAttributes(model);
+            return "login";
+        }
+
+        if (userService.isUserDisabled(username)) {
+            log.warn("Login attempt for disabled user: {}", username);
+            model.addAttribute("error", "login.userDisabled");
+            addLoginModelAttributes(model);
+            return "login";
+        }
+
+        // If pre-validation passes, forward to Spring Security's login endpoint
+        // This allows Spring Security to handle the actual authentication process
+        log.debug("Pre-validation passed for user: {}, forwarding to Spring Security", username);
+        return "forward:/login";
+    }
+
+    private void addLoginModelAttributes(Model model) {
+        // Add login-related model attributes
+        model.addAttribute("loginMethod", applicationProperties.getSecurity().getLoginMethod());
+
+        // Check if alternative login methods are available
+        Security securityProps = applicationProperties.getSecurity();
+        boolean altLogin = false;
+
+        if (securityProps.getOauth2() != null && securityProps.getOauth2().getEnabled()) {
+            altLogin = true;
+        }
+
+        if (securityProps.getSaml2() != null && securityProps.getSaml2().getEnabled()) {
+            altLogin = true;
+        }
+
+        model.addAttribute("altLogin", altLogin);
     }
 }
